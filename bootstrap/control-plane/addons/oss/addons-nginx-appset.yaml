@@ -1,0 +1,54 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: addons-nginx-test
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  generators:
+    - merge:
+        mergeKeys: [server]
+        generators:
+          - clusters:
+              values:
+                addonChart: nginx
+                # anything not staging or prod use this version
+                addonChartVersion: 15.5.2
+                addonChartRepository: https://charts.bitnami.com/bitnami
+              selector:
+                matchExpressions:
+                  - key: akuity.io/argo-cd-cluster-name
+                    operator: NotIn
+                    values: [in-cluster]
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: staging
+              values:
+                addonChartVersion: 15.5.2
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: prod
+              values:
+                addonChartVersion: 15.5.2
+  template:
+    metadata:
+      name: addon-{{name}}-{{values.addonChart}}
+    spec:
+      project: default
+      source:
+        chart: '{{values.addonChart}}'
+        repoURL: '{{values.addonChartRepository}}'
+        targetRevision: '{{values.addonChartVersion}}'
+        helm:
+          releaseName: '{{values.addonChart}}'
+      destination:
+        namespace: '{{values.addonChart}}'
+        name: '{{name}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
