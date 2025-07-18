@@ -10,3 +10,4 @@ grafana:
       isDefault: false
       jsonData:
         maxLines: 1000
+        queryType: log
