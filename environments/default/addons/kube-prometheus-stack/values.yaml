@@ -1,1 +1,4 @@
 # Helm chart values
+grafana:
+  service:
+    type: LoadBalancer
