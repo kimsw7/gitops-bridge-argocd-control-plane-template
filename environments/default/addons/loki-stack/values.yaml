@@ -1,7 +1,5 @@
 # # Helm chart values
 loki:
-  image:
-    tag: 2.10.0
   enabled: true
 
   config:
