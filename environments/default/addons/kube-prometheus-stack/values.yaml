@@ -1,13 +1,49 @@
 # Helm chart values
-# grafana:
-#   service:
-#     type: LoadBalancer
-#   additionalDataSources:
-#     - name: Loki
-#       type: loki
-#       access: proxy
-#       url: http://loki-stack.loki-stack.svc.cluster.local:3100
-#       isDefault: false
-#       jsonData:
-#         maxLines: 1000
-#         queryType: log
+grafana:
+  service:
+    type: LoadBalancer
+  resources:
+    requests:
+      cpu: "50m"
+      memory: "128Mi"
+    limits:
+      cpu: "100m"
+      memory: "256Mi"
+
+prometheus:
+  prometheusSpec:
+    resources:
+      requests:
+        cpu: "250m"
+        memory: "512Mi"
+      limits:
+        cpu: "500m"
+        memory: "1Gi"
+
+alertmanager:
+  alertmanagerSpec:
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+      limits:
+        cpu: "100m"
+        memory: "128Mi"
+
+nodeExporter:
+  resources:
+    requests:
+      cpu: "30m"
+      memory: "32Mi"
+    limits:
+      cpu: "60m"
+      memory: "64Mi"
+
+kubeStateMetrics:
+  resources:
+    requests:
+      cpu: "50m"
+      memory: "64Mi"
+    limits:
+      cpu: "100m"
+      memory: "128Mi"
