@@ -1,13 +1,13 @@
 # Helm chart values
-grafana:
-  service:
-    type: LoadBalancer
-  additionalDataSources:
-    - name: Loki
-      type: loki
-      access: proxy
-      url: http://loki-stack.loki-stack.svc.cluster.local:3100
-      isDefault: false
-      jsonData:
-        maxLines: 1000
-        queryType: log
+# grafana:
+#   service:
+#     type: LoadBalancer
+#   additionalDataSources:
+#     - name: Loki
+#       type: loki
+#       access: proxy
+#       url: http://loki-stack.loki-stack.svc.cluster.local:3100
+#       isDefault: false
+#       jsonData:
+#         maxLines: 1000
+#         queryType: log
