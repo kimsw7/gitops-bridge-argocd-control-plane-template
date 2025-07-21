@@ -1,4 +1,9 @@
 # # Helm chart values
+loki:
+  image:
+    repository: grafana/loki
+    tag: 3.2.1 
+
 # loki:
 #   enabled: true
 
